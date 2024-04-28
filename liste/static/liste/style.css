@@ -1,0 +1,410 @@
+
+/* 
+   contenu de la page
+*/
+
+
+.main-content {
+    margin: 15px auto;
+    width: 90%;
+    max-width: 1000px;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(12, 5, 5, 0.1);
+    
+  }
+
+  
+
+   /* 
+      titre effet animation haut en bas 
+  */
+  
+  .h1-container {
+      text-align: center;
+      animation-name: titel;
+      animation-duration: 2s;
+  
+    }
+    @keyframes titel {
+      0% {
+        opacity: 0;
+        transform: translateY(-100px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .h1 {
+      font-size: 20px;
+      padding: 0;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    .h2-container {
+      text-align: center;
+      font-size: large, 20px;
+      
+    }
+    .h2-container h2 {
+      font-size: 18px; /* Modifiez la taille de la police selon vos besoins */
+      color: #333; /* Modifiez la couleur du texte selon vos besoins */
+      /* Ajoutez d'autres styles au besoin */
+      text-align: center;
+    
+    }
+    .separator-line {
+    width: 100%;
+    height: 1px; /* Épaisseur de la ligne de séparation */
+    background-color: #ccc; /* Couleur de la ligne de séparation */
+    border: none; /* Supprimer le bord de la ligne de séparation */
+    margin: 10px 0; /* Marge au-dessus et en dessous de la ligne de séparation */
+  }
+  
+  .h2-container h2 {
+    font-size: 25px; /* Modifiez la taille de la police selon vos besoins */
+    color: #333; /* Modifiez la couleur du texte selon vos besoins */
+    /* Ajoutez d'autres styles au besoin */
+    margin: 20px;
+    margin-bottom: 45px;
+    margin-top: 45px;
+  }
+  .separator-line {
+      width: 100%; /* La largeur de la ligne de séparation prend toute la largeur disponible */
+      height: 3px; /* Épaisseur de la ligne de séparation */
+      background-color: #080505; /* Couleur de la ligne de séparation */
+      border: none; /* Supprime la bordure par défaut */
+      margin: 10px 0; /* Marge au-dessus et en dessous de la ligne de séparation */
+    }
+    
+    /* 
+      banniere millieu de page 
+  */
+  .carte img {
+    width: 100%; 
+    max-width: 100%; 
+    height: auto; 
+    object-fit: contain; 
+    border-radius: 10px; 
+}
+@media (max-width: 768px) {
+    .carte {
+        flex-direction: column; 
+        padding: 20px; 
+    }
+}
+    /* or
+        object-fit: cover; */
+     
+      
+    /* Adding a negative margin to move the image up */
+    
+
+
+
+        
+    
+.texte {
+    font-family: 'Open Sans', sans-serif; 
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    margin: 50px 0; 
+    line-height: 1.5;
+    text-align: justify;
+}
+  
+    
+  
+  
+    
+  
+      /* 
+      pied de page
+  */
+  
+  .container-media {
+    margin-left:5%;
+  
+  }
+  
+  
+  
+  
+  .footer-dark {
+    padding:50px 0;
+    color:#f0f9ff;
+    background-color:#282d32;
+  }
+  
+  .footer-dark h3 {
+    margin-top:0;
+    margin-bottom:12px;
+    font-weight:bold;
+    font-size:16px;
+  }
+  
+  .footer-dark ul {
+    padding:0;
+    list-style:none;
+    line-height:1.6;
+    font-size:14px;
+    margin-bottom:0;
+   
+  }
+  
+  .footer-dark ul a {
+    color:inherit;
+    text-decoration:none;
+    opacity:0.6;
+    
+  }
+  
+  .footer-dark ul a:hover {
+    opacity:0.15;
+  }
+  /* 
+      pied de page responsive
+  */
+  
+  @media (max-width:767px) {
+    .footer-dark .item:not(.social) {
+      text-align:center;
+      padding-bottom:20px;
+    }
+  }
+  
+  .footer-dark .item.text {
+    margin-bottom:36px;
+  }
+  
+  @media (max-width:767px) {
+    .footer-dark .item.text {
+      margin-bottom:0;
+    }
+
+    
+  }
+
+  
+  .footer-dark .item.text p {
+    opacity:0.6;
+    margin-bottom:0; 
+    
+  }
+  
+  .footer-dark .item.social {
+    text-align:center;
+  
+  
+  
+  }
+  
+  @media (max-width:991px) {
+    .footer-dark .item.social {
+      text-align:center;
+      margin-top:20px;
+    }
+  }
+  
+  
+  .footer-dark .copyright {
+    text-align:center;
+    padding-top:24px;
+    opacity:0.3;
+    font-size:13px;
+    margin-bottom:0;
+  }
+
+  
+  
+
+ 
+
+  
+  
+  /* css pour animation avis visibles */
+  .avis-container {
+    overflow: hidden;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 80%;
+    max-width: 800px;
+    margin: auto;
+    height: 150px;
+}
+h2 {
+   position: center;
+    font-size: 30px;
+    color: #333;
+    margin: 0;
+    margin-bottom: 30px;
+    font-weight: bold;
+    
+}
+.avis {
+  position: absolute;
+  width: 100%;
+  top: 100%; /* Start outside the container */
+  animation: defilement 5s linear infinite;
+  
+}
+
+@media (max-width: 768px) {
+  .avis-container {
+      width: 95%;
+      max-width: none; /* Permet au conteneur de s'étendre pleinement sur de petits écrans */
+  }
+}
+@keyframes defilement {
+    from {
+        top: 100%; /* Start outside the container */
+    }
+    to {
+        top: -100%; /* End outside the container */
+    }
+}
+
+/* tableau rapport veterinaire */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+img {
+  width: 100px;  /* Fixed width for images */
+  height: auto;
+  border-radius: 5px;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 10;  /* Keeps the header on top of other content when scrolling */
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block; /* Makes the table elements behave like block elements */
+  }
+
+  thead tr {
+    position: absolute; /* Positions the header out of the view, not taking space */
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr { 
+    border: 1px solid #ccc; /* Adds border around each row */
+  }
+
+  td {
+    /* Each cell is now a row on its own */
+    border: none;
+    position: relative;
+    padding-left: 50%; /* Gives room for data to be shown on the right */
+    text-align: right; /* Aligns the text to the right */
+  }
+
+  td:before {
+    /*  */
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%; /*  */
+    padding-left: 10px; /* Padding for the label */
+    font-weight: bold;
+    text-align: left; /* Aligns the label text to the left */
+  }
+}
+
+/* Styles de base pour le formulaire */
+form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+input, textarea, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Responsive design pour petits écrans */
+@media (max-width: 600px) {
+  form {
+      width: 90%;
+      padding: 10px;
+  }
+
+  input, textarea, button {
+      font-size: 16px; /* Plus grande taille de texte pour facilité la lecture */
+  }
+}
+/*  texte formulaire */
+.form-background {
+  position: relative;
+  text-align: center; /*  centré */
+}
+/* page index pour la parti card */
+.button2 {
+  background-color: #4CAF50; /* Couleur verte */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.button2:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
