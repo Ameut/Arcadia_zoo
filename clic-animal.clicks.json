@@ -1,0 +1,70 @@
+[{
+  "_id": {
+    "$oid": "661ee49c8906213fd6faf19c"
+  },
+  "animal_id": 5,
+  "count": 30
+},
+{
+  "_id": {
+    "$oid": "661ee49e8906213fd6faf19d"
+  },
+  "animal_id": 6,
+  "count": 12
+},
+{
+  "_id": {
+    "$oid": "661ee4aa8906213fd6faf19e"
+  },
+  "animal_id": 7,
+  "count": 8
+},
+{
+  "_id": {
+    "$oid": "661ee65c8906213fd6faf19f"
+  },
+  "animal_id": 8,
+  "count": 28
+},
+{
+  "_id": {
+    "$oid": "6623d8d08906213fd6faf1a0"
+  },
+  "animal_id": 9,
+  "count": 1
+},
+{
+  "_id": {
+    "$oid": "6624396ed4701121da16097f"
+  },
+  "animal_id": 10,
+  "count": 4
+},
+{
+  "_id": {
+    "$oid": "6626cc1c4bed40d1f85a1c9d"
+  },
+  "animal_id": 1,
+  "count": 7
+},
+{
+  "_id": {
+    "$oid": "6626edf24bed40d1f85a1c9e"
+  },
+  "animal_id": 2,
+  "count": 3
+},
+{
+  "_id": {
+    "$oid": "6626edf44bed40d1f85a1c9f"
+  },
+  "animal_id": 3,
+  "count": 4
+},
+{
+  "_id": {
+    "$oid": "6626faed4bed40d1f85a1ca0"
+  },
+  "animal_id": 4,
+  "count": 2
+}]
