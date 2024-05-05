@@ -227,49 +227,60 @@
   
   
   /* css pour animation avis visibles */
-  .avis-container {
-    overflow: hidden;
-    position: relative;
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    width: 80%;
-    max-width: 800px;
-    margin: auto;
-    height: 150px;
-}
-h2 {
-   position: center;
-    font-size: 30px;
-    color: #333;
-    margin: 0;
-    margin-bottom: 30px;
-    font-weight: bold;
-    
-}
-.avis {
-  position: absolute;
-  width: 100%;
-  top: 100%; /* Start outside the container */
-  animation: defilement 5s linear infinite;
-  
+  .avis-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 0;
 }
 
+.avis-card {
+    flex: 0 0 auto;
+    width: 90%;  /* Ajusté pour la réactivité */
+    max-width: 300px; /* Maximum width for large screens */
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    background-color: white;
+    scroll-snap-align: start;
+    transition: transform 0.3s ease-in-out;
+}
+
+.avis-card:hover {
+    transform: scale(1.03);
+}
+
+.avis-image {
+    width: 100%;
+    height: 200px; /* Fixe la hauteur pour un meilleur contrôle */
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.avis-content {
+    padding: 20px;
+}
+
+/* Media Queries pour le responcive */
 @media (max-width: 768px) {
-  .avis-container {
-      width: 95%;
-      max-width: none; /* Permet au conteneur de s'étendre pleinement sur de petits écrans */
-  }
-}
-@keyframes defilement {
-    from {
-        top: 100%; /* Start outside the container */
-    }
-    to {
-        top: -100%; /* End outside the container */
+    .avis-card {
+        width: 80%; /* large */
     }
 }
+
+@media (max-width: 480px) {
+    .avis-card {
+        width: 95%; /* plein */
+    }
+
+    .avis-content {
+        padding: 10px; /* ajustement du padding */
+    }
+}
+
+
 
 /* tableau rapport veterinaire */
 
@@ -418,4 +429,14 @@ button:hover {
   .navbar-brand img {
       height: 30px;
   }
+}
+
+
+.animal-image {
+  display: none;
+  position: absolute;
+  z-index: 100;
+}
+.animal-name {
+  cursor: pointer;
 }

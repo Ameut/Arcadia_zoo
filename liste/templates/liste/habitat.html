@@ -22,6 +22,7 @@
       rel="stylesheet"
       href="{% static 'liste/style.css' %}"
     />
+    
 
     <title>Parc zoologique Arcadia</title>
   </head>
@@ -33,7 +34,7 @@
     </div>
       <header>
   
-        <a class="navbar-brand" >
+        <a class="navbar-brand" href="/">
           <img src="{% static 'liste/images/logo.png' %}" alt="Logo Zoo Arcadia" style="height: 60px;">
       </a>
         <!-- Contenu de la barre de navigation -->
@@ -47,10 +48,7 @@
                   <li class="nav-item active">
                     <a class="nav-link" href="/habitat">Habitats <span class="sr-only">(current)</span></a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/animaux">Nos animaux</a>
-                  
-                  </li>
+                 
                   <li class="nav-item">
                     <a class="nav-link" href="/service">Service & Horraire </a>
                   </li>
@@ -66,9 +64,7 @@
                   <a class="nav-link" href="/submit_avis">Soumettre un avis</a>
                 </li>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/avis_visibles">Vos avis</a>
-              </li>
+             
             </li>
               <li class="nav-item">
                 <a class="nav-link" href="/rapport">Rapport véterinaire</a>
@@ -85,43 +81,52 @@
   </head>
   <body>
     <h2>Nos habitats</h2>
+
 <table>
-  <thead>
-    <tr>
-      <th>Nom</th>
-      <th>Description</th>
-      <th>Animaux</th>
-      <th>Image</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for habitat in habitats %}
-    <tr>
-      <td>{{ habitat.nom }}</td>
-      <td>{{ habitat.description }}</td>
-      <td>
-        {% if habitat.animaux.exists %}
-        <ul>
-          {% for animal in habitat.animaux.all %}
-          <li>{{ animal.prenom }}</li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p>No animals in this habitat.</p>
-        {% endif %}
-      </td>
-      <td>
-        {% if habitat.images.exists %}
-        <img src="{{ habitat.images.first.image_data.url }}" alt="Image of {{ habitat.nom }}"
-             style="width: 100%; max-width: 700px; height: auto;">
-        {% else %}
-        <p>No image available.</p>
-        {% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Animaux</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for habitat in habitats %}
+        <tr>
+            <td>{{ habitat.nom }}</td>
+            <td>{{ habitat.description }}</td>
+            <td>
+                {% if habitat.animaux.exists %}
+                <ul>
+                    {% for animal in habitat.animaux.all %}
+                    <li>
+                        <span class="animal-name"onmouseover="showImage(this)"
+                        onmouseout="hideImage(this)" onclick="incrementClick({{ animal.id }})">
+                            {{ animal.prenom }} - Clics : <span id="clicks-count-{{ animal.id }}">{{ animal.clics }}</span>
+                        </span>
+                        <div class="animal-image" style="display: none;">
+                            <img src="{{ animal.image.url }}" alt="Image de {{ animal.prenom }}" style="max-width: 350px; height: auto;">
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>Aucun animal dans cet habitat.</p>
+                {% endif %}
+            </td>
+            <td>
+                {% if habitat.images.exists %}
+                <img src="{{ habitat.images.first.image_data.url }}" alt="Image of {{ habitat.nom }}" style="width: 100%; max-width: 700px; height: auto;">
+                {% else %}
+                <p>Pas d'image disponible.</p>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
 
     
     <div class="svg-image"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -191,6 +196,34 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 </div>
+<script>
+  function showImage(element) {
+      element.nextElementSibling.style.display = 'block';
+  }
+
+  function hideImage(element) {
+      element.nextElementSibling.style.display = 'none';
+  }
+</script>
+<script type="text/javascript">
+  function incrementClick(animalId) {
+      fetch(`/increment_click/${animalId}/`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({}),
+      })
+      .then(response => response.json())
+      .then(data => {
+          document.getElementById(`clicks-count-${animalId}`).textContent = data.new_click_count;
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+      });
+  }
+  </script>
+  
 </body>
 
 

@@ -63,7 +63,7 @@ ROOT_URLCONF = 'zooArcadia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates', 'liste')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -151,6 +151,13 @@ LOGGING = {
         'django': {
             'handlers': ['console'],
             'level': 'INFO',
+            },
+        'liste': { # Logger pour l'application liste
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+            
         },
+    
     },
 }

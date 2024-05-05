@@ -65,9 +65,7 @@
               <a class="nav-link" href="liste/submit_avis">Soumettre un avis</a>
             </li>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/avis_visibles">Vos avis</a>
-          </li>
+         
         </li>
           <li class="nav-item">
             <a class="nav-link" href="/rapport">Rapport véterinaire</a>
@@ -88,17 +86,21 @@
   
       <main>
         
-        <div class="form-background">
-  <img src="{% static 'liste/images/img-fond.jpg' %}" alt="Image de Fond" class="img-fluid">
-  <div class="form-container">
-    <h1>Soumettre un Avis</h1>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" name="submit_avis">Envoyer</button>
-    </form>
-  </div>
-</div>
+        <div class="h2-avis">
+          <h2>Avis de nos clients</h2>
+      </div>
+      <div class="avis-slider">
+          {% for avis in avis_liste %}
+          <div class="avis-card">
+              <img src="{% static 'liste/images/logo.png' %}" alt="Image Avis" class="avis-image">
+              <div class="avis-content">
+                  <h3>{{ avis.pseudo }}</h3>
+                  <p>{{ avis.commentaire }}</p>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+      
 
         </main>
         
@@ -178,6 +180,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slider = document.querySelector('.avis-slider');
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+  
+      slider.addEventListener('mousedown', (e) => {
+          isDown = true;
+          startX = e.pageX - slider.offsetLeft;
+          scrollLeft = slider.scrollLeft;
+      });
+  
+      slider.addEventListener('mouseleave', () => {
+          isDown = false;
+      });
+  
+      slider.addEventListener('mouseup', () => {
+          isDown = false;
+      });
+  
+      slider.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - slider.offsetLeft;
+          const walk = (x - startX) * 2; //scroll-speed
+          slider.scrollLeft = scrollLeft - walk;
+      });
+  });
+  </script>
   </body>
   
   

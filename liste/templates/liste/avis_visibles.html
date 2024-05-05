@@ -34,7 +34,7 @@
       <header>
   
       <!-- logo -->
-      <a class="navbar-brand" >
+      <a class="navbar-brand" href="/">
         <img src="{% static 'liste/images/logo.png' %}" alt="Logo Zoo Arcadia" style="height: 60px;">
     </a>
          <!-- Contenu de la barre de navigation -->
@@ -48,10 +48,7 @@
               <li class="nav-item active">
                 <a class="nav-link" href="/habitat">Habitats <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/animaux">Nos animaux</a>
               
-              </li>
               <li class="nav-item">
                 <a class="nav-link" href="/service">Service & Horraire </a>
               </li>
@@ -65,9 +62,7 @@
               <a class="nav-link" href="/submit_avis">Soumettre un avis</a>
             </li>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/avis_visibles">Vos avis</a>
-          </li>
+         
         </li>
 
            
@@ -90,21 +85,21 @@
   
       <main>
         
-       <div class="h2-avis"> 
-        <h2>Avis de nos clients</h2>
+        <div class="h2-avis">
+          <h2>Avis de nos clients</h2>
       </div>
-        {% for avis in avis_liste %}
-    <div class="avis-container">
-        <!-- Simule la répétition avec des exemples statiques -->
-        <div class="avis">
-       
-            <h2>{{ avis.pseudo }}</h2>
-            <p>{{ avis.commentaire }}</p>
-        </div>
-        
-           
-    </div>
-    {% endfor %}    
+      <div class="avis-slider">
+          {% for avis in avis_liste %}
+          <div class="avis-card">
+              <img src="{% static 'liste/images/logo.png' %}" alt="Image Avis" class="avis-image">
+              <div class="avis-content">
+                  <h3>{{ avis.pseudo }}</h3>
+                  <p>{{ avis.commentaire }}</p>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+      
     <!-- Contenu principal de la page -->
           <section>
             
@@ -180,6 +175,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slider = document.querySelector('.avis-slider');
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+  
+      slider.addEventListener('mousedown', (e) => {
+          isDown = true;
+          startX = e.pageX - slider.offsetLeft;
+          scrollLeft = slider.scrollLeft;
+      });
+  
+      slider.addEventListener('mouseleave', () => {
+          isDown = false;
+      });
+  
+      slider.addEventListener('mouseup', () => {
+          isDown = false;
+      });
+  
+      slider.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - slider.offsetLeft;
+          const walk = (x - startX) * 2; //scroll-speed
+          slider.scrollLeft = scrollLeft - walk;
+      });
+  });
+  </script>
   </body>
   
   
@@ -193,21 +218,3 @@
 
 
 
-<!-- Template pour afficher les avis visibles. 
-
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Avis Visibles</title>
-  </head>
-  <body>
-    <h2>Avis Clients Visibles</h2>
-    {% for avis in avis_liste %}
-    <div>
-      <h2>{{ avis.pseudo }}</h2>
-      <p>{{ avis.commentaire }}</p>
-    </div>
-    {% endfor %}
-  </body>
-</html>

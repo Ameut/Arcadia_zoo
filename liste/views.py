@@ -13,10 +13,13 @@ from django.contrib.auth import logout, login
 from django.contrib import messages
 import logging
 
+
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, redirect
 from .forms import ContactForm
 from pymongo import MongoClient
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -38,31 +41,6 @@ def habitat(request):
     context = {'habitats': habitats}
     return render(request, 'liste/habitat.html', context)
 
-def animaux(request):
-    try:
-        client = MongoClient('localhost', 27017)# MongoClient('localhost', 27017)
-        db = client['clic-animal']
-        clicks_collection = db['clicks']
-
-        animals = Animal.objects.all()
-        habitats = Habitat.objects.all()
-        images = Image.objects.all()
-        races = Race.objects.all()
-
-        for animal in animals:#  pour chaque animal, obtenir le nombre de clics associés
-            clicks_data = clicks_collection.find_one({'animal_id': animal.id})
-            animal.clicks = clicks_data['count'] if clicks_data else 0
-
-        context = {
-            'animals': animals,
-            'habitats': habitats,
-            'images': images,
-            'races': races
-        }
-
-        return render(request, 'liste/animaux.html', context)   # Renvoyer la réponse HTTP avec les informations des animaux et les images
-    except Exception as e:#  en cas d'erreur lors de l'accès à la base de données
-        return HttpResponse("Erreur de la base de donée: " + str(e), status=500)
 
 def service(request):
     services = Service.objects.all()
@@ -82,39 +60,7 @@ def contact(request):
     return render(request, 'liste/contact.html', {'form': form})
 #  rapport veto    #
 
-# Logger pour enregistrer les messages d'erreur
-# tester si l'utilisateur est un vétérinaire pour accéder à la page de rapport
-logger = logging.getLogger(__name__)
 
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user:
-                if user.groups.filter(name='vétérinaire').exists():
-                    login(request, user)
-                    return redirect('rapport')
-                else:
-                    logger.info(f"Access denied for user {username}: not a member of 'vétérinaire' group")
-                    messages.error(request, "Accès refusé. Vous devez être membre du groupe 'vétérinaire'.")
-                    return redirect('login1')
-            else:
-                logger.warning(f"Invalid login attempt for username: {username}")
-                messages.error(request, "Nom d'utilisateur ou mot de passe invalide.")
-        else:
-            logger.error("Form submission invalid")
-            messages.error(request, "Soumission de formulaire invalide.")
-    else:
-        form = AuthenticationForm()
-    return render(request, 'liste/login1.html', {'form': form})
-
-def user_is_veterinaire(user):
-    in_group = user.groups.filter(name='vétérinaire').exists()
-    logger.info(f"User {user.username} in 'vétérinaire': {in_group}")
-    return in_group
 
 #@user_passes_test(user_is_veterinaire)
 @login_required
@@ -192,30 +138,82 @@ def avis_visible(request):
 
 #connection à la base de données mongo
 
-def get_db_handle():
-    client = MongoClient(host='localhost', port=27017)  # Mettez à jour avec les paramètres MongoDB
-    return client['clic-animal']
 
-def increment_click(request, animal_id):
-    print(f"Incrementing click for animal ID: {animal_id}")   
-    db = get_db_handle()
-    collection = db.clicks
-    result = collection.update_one({'animal_id': animal_id}, {'$inc': {'count': 1}}, upsert=True)
-    print(f"MongoDB update result: {result.matched_count}")
-    return redirect('animaux')
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
+from django.http import HttpRequest, JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
+from django.urls import reverse
 
-    
-    
-    '''animals = Animal.objects.all().prefetch_related('images')
-    animal_info = []
-    for animal in animals:
-        # Pour chaque animal, obtenir toutes les images associées
-        images_html = ''.join([f'<img src="{image.image_data.url}" alt="{animal.prenom}" style="width:100px;height:auto;">' for image in animal.images.all()])
-        # Construire la chaîne de caractères incluant les balises <img> pour les images
-        animal_str = f"{animal.prenom} - Race: {animal.race}, Habitat: {animal.habitat}, Images: {images_html}"
-        animal_info.append(animal_str)
-    
-    animal_info_str = "<br>".join(animal_info)  # Utiliser <br> pour le retour à la ligne
-    # Renvoyer la réponse HTTP avec les informations des animaux et les images
-    return HttpResponse(f'Mes animaux :<br>{animal_info_str}')'''
+logger = logging.getLogger(__name__)
+
+mongo_client = MongoClient('localhost', 27017)
+db = mongo_client['clic-animal']
+clicks_collection = db['clicks']
+
+def sync_clicks(request):# Fonction pour synchroniser les clics de MongoDB avec Django
+    clicks_collection = db['clicks']
+    clicks = clicks_collection.find()
+
+    for click in clicks:
+        animal_id = click['animal_id']
+        count = click['count']
+        try:
+            animal = Animal.objects.get(id=animal_id)
+            animal.clics = count
+            animal.save()
+        except ObjectDoesNotExist:
+            logger.warning(f"Animal with ID {animal_id} does not exist.")
+
+    return redirect(reverse('admin:liste_animal_changelist'))
+
+@csrf_exempt#  pour autoriser les requêtes POST sans jeton CSRF
+def increment_click(request: HttpRequest, animal_id: int) -> JsonResponse:
+    collection = db['clicks']
+    collection.update_one(
+        {'animal_id': animal_id},
+        {'$inc': {'count': 1}},
+        upsert=True
+    )
+    updated_click = collection.find_one({'animal_id': animal_id})
+
+    # Mettre à jour le champ clics dans Django
+    try:
+        animal = Animal.objects.get(id=animal_id)
+        animal.clics = updated_click['count']
+        animal.save()
+    except ObjectDoesNotExist:
+        logger.warning(f"Animal with ID {animal_id} does not exist.")
+
+    return JsonResponse({'new_click_count': updated_click['count']})
+
+def animaux(request):
+    try:
+        clicks_collection = db['clicks']
+        animals = Animal.objects.all()
+        habitats = Habitat.objects.all()
+        images = Image.objects.all()
+        races = Race.objects.all()
+
+        for animal in animals:
+            clicks_data = clicks_collection.find_one({'animal_id': animal.id})
+            animal.clics = clicks_data['count'] if clicks_data else 0
+
+        context = {
+            'animals': animals,
+            'habitats': habitats,
+            'images': images,
+            'races': races
+        }
+
+        return render(request, 'liste/animaux.html', context)
+    except Exception as e:
+        logger.error(f"Erreur de la base de données: {str(e)}")
+        return HttpResponse("Erreur de la base de données: " + str(e), status=500)
+
+def reset_click(request, animal_id):
+    animal = get_object_or_404(Animal, id=animal_id)
+    animal.clics = 0
+    animal.save()
+    return JsonResponse({'message': 'Compteur remis à zéro', 'animal_id': animal_id, 'clics': animal.clics})

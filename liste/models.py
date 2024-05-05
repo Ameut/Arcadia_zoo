@@ -51,12 +51,13 @@ class Race(models.Model):
 class Animal(models.Model):
     prenom = models.CharField(max_length=50)
     etat = models.CharField(max_length=50)
-    # Un animal appartient à un habitat et à une race
     habitat = models.ForeignKey(Habitat, related_name='animaux', on_delete=models.CASCADE)
     race = models.ForeignKey(Race, related_name='animaux', on_delete=models.SET_NULL, null=True, default=1)
     image = models.ImageField(upload_to='animals/', verbose_name=_("Image de l'animal"))
+    clics = models.IntegerField(default=0)  # Champ pour les cliques sur l'animal
+
     def __str__(self):
-         return f"{self.prenom} - {self.race}"
+        return f"{self.prenom} - {self.race}"
 
 class RapportVeterinaire(models.Model):
     date = models.DateField()

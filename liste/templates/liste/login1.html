@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Login</title>
+    <title>Login page vétérinaire</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -32,7 +32,7 @@
         color: white;
         border: none;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 15px;
       }
       button:hover {
         background-color: #5058e2;
@@ -40,6 +40,23 @@
       .erreurlist {
         color: red;
         font-size: 0.8em;
+      }
+      .button-link {
+        display: block;
+        width: 100%;
+        background-color: #5058e0;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        text-decoration: none; /* Supprime le soulignement des liens */
+        border: none;
+        cursor: pointer;
+      }
+
+      .button-link:hover {
+        background-color: #5058e2;
       }
     </style>
   </head>
@@ -69,7 +86,6 @@
           placeholder="Password"
           required
         />
-
         {% if form.password.errors %}
         <div class="errorlist">
           {% for error in form.password.errors %}
@@ -78,7 +94,9 @@
         </div>
         {% endif %}
       </div>
-      <button type="submit">Envoi</button>
+      <button type="submit">Login</button>
+      <!-- Bouton retour vers la page d'accueil -->
+      <a href="/" class="button-link">Retour</a>
     </form>
   </body>
 </html>
