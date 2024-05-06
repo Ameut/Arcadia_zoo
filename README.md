@@ -3,7 +3,12 @@ application web d'un projet zoo avec le framawork Django
 Projet zoo Arcadia pour ecf 2024
 Aperçu du projet
 Zoo Arcadia est une application web conçue pour améliorer l'interaction des visiteurs en fournissant des informations détaillées sur les habitats des animaux et les services du zoo. L'application met l'accent sur les thèmes écologiques, reflétant l'engagement du zoo envers la durabilité.
-
+Admin: admin
+Mot passs: loulou25
+admin: vétérinaire 
+passe: zoovetoarcadia
+admin: employe
+pass: zooarcadia
 Pile technologique
 Frontend : HTML, CSS (Bootstrap), JavaScript
 Backend : Django (Python)
