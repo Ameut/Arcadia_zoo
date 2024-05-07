@@ -1,0 +1,3 @@
+[submodule "zoo_arcadia24"]
+    path = zoo_arcadia24
+    url =https://github.com/Ameut/Arcadia_zoo
