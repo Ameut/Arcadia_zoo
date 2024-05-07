@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "zooArcadia/wsgi.py", "use": "@vercel/python" }
+    ],
+    "routes": [
+      { "src": "/(.*)", "dest": "zooArcadia/wsgi.py" }
+    ]
+  }
+  
