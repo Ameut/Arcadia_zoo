@@ -44,4 +44,4 @@ Système de feedback permettant aux visiteurs de laisser des avis, gérés par l
 Contribution
 
 Contact
-Pour toute question, veuillez contacter ouafiameur@gmail.com
+Pour toute question, veuillez contacter ouafiameur@gmail.com ou ameur.ouafi@hotmail.fr
