@@ -1,4 +1,5 @@
 # Arcadia_zoo
+
 application web d'un projet zoo avec le framawork Django
 Projet zoo Arcadia pour ecf 2024
 Aperçu du projet
@@ -15,7 +16,9 @@ Configuration locale
 Cloner le dépôt :
 bash
 Copy code
-git clone https://github.com/Ameut/Arcadia_zoo
+Pour gothub : git clone https://github.com/Ameut/Arcadia_zoo
+Pour gitlab : https://gitlab.com/zooarcadia-admin/zoo-arcadia.git
+
 cd zooarcadia
 Installer les dépendances :
 bash
@@ -29,8 +32,7 @@ bash
 Copy code
 python manage.py migrate
 Démarrer le serveur de développement :
-bash
-Copy code
+Sur votre machine activation env: .\myenv\Scripts\activate puis,
 python manage.py runserver
 Accéder à l'application à http://127.0.0.1:8000
 Fonctionnalités
@@ -41,8 +43,5 @@ Système d'authentification pour le personnel et les administrateurs.
 Système de feedback permettant aux visiteurs de laisser des avis, gérés par l'approbation du personnel.
 Contribution
 
-
-
-
 Contact
-Pour toute question, veuillez contacter ameur.ouafi@hotmail.fr
+Pour toute question, veuillez contacter ouafiameur@gmail.com
