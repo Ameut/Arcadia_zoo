@@ -87,13 +87,8 @@ Créer un superutilisateur :
 python manage.py createsuperuser
 
 Démarrer le serveur de développement :
-
-Créez un environnement virtuel et activez-le
-(déja confiuré dans le framework dossier myenv juste l'activé)
-création => python -m venv env si cela ne fonctionne pas.
-activé : source myenv/bin/activate => Sur Windows, utilisez `myenv\Scripts\activate`
-
-Démarrez le serveur :
+bash
+Copy code
 python manage.py runserver
 Accédez a http://127.0.0.1:8000
 
