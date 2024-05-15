@@ -52,7 +52,7 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            # Ajoutez ici la logique pour rediriger l'utilisateur après la soumission du formulaire
+            #  logique pour rediriger l'utilisateur après la soumission du formulaire
             return redirect('index')  # retour a la page d'acceuil
     else:
         form = ContactForm()
@@ -62,19 +62,19 @@ def contact(request):
 
 
 
-#@user_passes_test(user_is_veterinaire)
+
 @login_required
 def rapport(request):
-     rapports = RapportVeterinaire.objects.all().prefetch_related('nourriture_infos')
-    
-     return render(request, 'liste/rapport.html', {'rapports': rapports})
-    
-# les avis clients
+    rapports = RapportVeterinaire.objects.all().prefetch_related('animal__nourriture_infos')
+    nourritures = NourritureInfo.objects.all()
+    return render(request, 'liste/rapport.html', {'rapports': rapports, 'nourritures': nourritures})
+
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponseForbidden
 
-
+# les avis clients
 
 def avis(request):
     # Récupération de tous les avis visibles
@@ -90,23 +90,23 @@ def avis_page(request):
             avis.commentaire = form.cleaned_data['commentaire']
             avis.save()
             return redirect('avis_page')
-    else:
+    else:# Si la requête n'est pas de type POST, on crée un formulaire vide
         form = AvisForm()
     avis_valides = Avis.objects.filter(isVisible=True)
     return render(request, 'liste/avis.html', {'form': form, 'avis_valides': avis_valides})
 
 
-def submit_avis(request):
+def submit_avis(request):# Vue pour soumettre un avis
     if request.method == 'POST':
         form = AvisForm(request.POST)
         if form.is_valid():
-            # Ici, form.save(commit=False) crée une instance d'Avis sans sauvegarder en DB
+            #  crée une instance d'Avis sans sauvegarder en DB
             avis = form.save(commit=False)
             
             # Plus besoin de cette ligne puisque le pseudo est déjà inclus dans le formulaire
             # avis.pseudo = request.user.username
             
-            avis.isVisible = False  # Cela peut rester inchangé
+            avis.isVisible = False  # L'avis n'est pas visible par défaut
 
             avis.save()  # Sauvegarde l'instance d'Avis en DB avec le pseudo du formulaire
             return redirect('avis_visibles')
@@ -125,7 +125,7 @@ def validation_avis(request):
 def est_admin(user):
     return user.is_staff or user.is_superuser
 
-@user_passes_test(est_admin)
+@user_passes_test(est_admin)#   pour vérifier si l'utilisateur est un administrateur
 def valider_avis(request, avis_id):
     avis = get_object_or_404(Avis, id=avis_id)
     avis.isVisible = True

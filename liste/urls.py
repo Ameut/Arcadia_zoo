@@ -19,6 +19,10 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('increment_click/<int:animal_id>/', views.increment_click, name='increment_click'),
     path('sync_clicks/', views.sync_clicks, name='sync_clicks'),
-    path('validation_avis/<int:avis_id>/', views.valider_avis, name='valider_avis'),#  nom de la vue de la page de validation d'avis
+    path('validation_avis/<int:avis_id>/', views.valider_avis, name='valider_avis'),
+   
+    
 ]
+
+
 

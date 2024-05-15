@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-14u4htmey5z(^2!0+k%c(!6*zlpx)s7be7v(d1)q^(^%zav&8r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 # Paramètres pour les fichiers médias
 
 
