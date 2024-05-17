@@ -5,9 +5,15 @@ __pycache__/
 
 # Environnements virtuels
 venv/
+<<<<<<< HEAD
 myenv/
 .env/
 .venv/
+=======
+.venv/
+env/
+.env/
+>>>>>>> 43fcf57c2e40cbf0b5eaba13f7e7d5e57bea435e
 
 # Django
 *.sqlite3

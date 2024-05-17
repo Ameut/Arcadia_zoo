@@ -39,7 +39,7 @@
       
          <!-- Contenu de la barre de navigation -->
          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="/">Acceuil</a>
+          <a class="navbar-brand" href="/">Accueil</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -88,56 +88,65 @@
   
           <!-- Contenu principal de la page -->
 
-          <h3>Liste des rapports vétérinaires et nourritures </h3>
+          <h3>Liste des rapports vétérinaires</h3>
           <table>
-            <thead>
-                <tr>
-                    <th>Date du Rapport</th>
-                    <th>Détails</th>
-                    <th>Animal</th>
-                    <th>Nourriture Proposée</th>
-                    <th>Grammage</th>
-                    <th>Date de Consommation</th>
-                    <th>Heure de Consommation</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for rapport in rapports %}
-                    <!-- Main rapport details row -->
-                    <tr>
-                        <td rowspan="{{ rapport.nourriture_infos.all.count }}">{{ rapport.date }}</td>
-                        <td rowspan="{{ rapport.nourriture_infos.all.count }}">{{ rapport.detail }}</td>
-                        <td rowspan="{{ rapport.nourriture_infos.all.count }}">{{ rapport.animal }}</td>
-                        {% with rapport.nourriture_infos.all as nourritures %}
-                            {% if nourritures %}
-                                {% for nourriture in nourritures %}
-                                    {% if forloop.first %}
-                                        <td>{{ nourriture.nourriture_proposee }}</td>
-                                        <td>{{ nourriture.grammage_nourriture }}g</td>
-                                        <td>{{ nourriture.date_consommation }}</td>
-                                        <td>{{ nourriture.heure_consommation }}</td>
-                                    </tr>
-                                    {% else %}
-                                    <tr>
-                                        <td>{{ nourriture.nourriture_proposee }}</td>
-                                        <td>{{ nourriture.grammage_nourriture }}g</td>
-                                        <td>{{ nourriture.date_consommation }}</td>
-                                        <td>{{ nourriture.heure_consommation }}</td>
-                                    </tr>
-                                    {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                <td colspan="4">Pas de données sur la nourriture</td>
-                            {% endif %}
-                        {% endwith %}
-                    {% empty %}
-                    <tr>
-                        <td colspan="7">Aucun rapport disponible</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
+              <thead>
+                  <tr>
+                      <th>Animal</th>
+                      <th>Détails</th>
+                      <th>Etat</th>
+                      <th>Date</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for rapport in rapports %}
+                  <tr>
+                    <td>{{ rapport.animal }}</td> 
+                    <td>{{ rapport.detail }}</td>
+                    <td>{{ rapport.animal.etat }}</td> 
+                    <td>{{ rapport.date }}</td>
+                   
+                     
+                  </tr>
+                  {% empty %}
+                  <tr>
+                      <td colspan="3">Aucun rapport disponible</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+  
+          <h3>Informations sur la nourriture</h3>
+          <table>
+              <thead>
+                  <tr>
+                    
+                      <th>Prénom</th>
+                      <th>Race</th>
+                      <th>Nourriture Proposée</th>
+                      <th>Grammage</th>
+                      <th>Date de Consommation</th>
+                      <th>Heure de Consommation</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for nourriture in nourritures %}
+                  <tr>
+                     
+                      <td>{{ nourriture.animal.prenom }}</td>
+                      <td>{{ nourriture.animal.race }}</td>
+                      <td>{{ nourriture.nourriture_proposee }}</td>
+                      <td>{{ nourriture.grammage_nourriture }}g</td>
+                      <td>{{ nourriture.date_consommation }}</td>
+                      <td>{{ nourriture.heure_consommation }}</td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                      <td colspan="7">Aucune donnée sur la nourriture disponible.</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
           <section>
             
             

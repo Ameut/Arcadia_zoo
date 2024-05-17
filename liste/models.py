@@ -69,12 +69,11 @@ class RapportVeterinaire(models.Model):
 
 
 class NourritureInfo(models.Model):
-    rapport = models.ForeignKey(RapportVeterinaire, on_delete=models.CASCADE, related_name='nourriture_infos')
+    animal = models.ForeignKey(Animal, on_delete=models.CASCADE, related_name='nourriture_infos')
     nourriture_proposee = models.CharField(max_length=255, verbose_name=_("Nourriture proposée"))
     grammage_nourriture = models.DecimalField(max_digits=5, decimal_places=2, default=0.0, verbose_name=_("Grammage de la nourriture"))
-    # Utilisez `auto_now_add=True` pour la date de consommation pour enregistrer la date de création de l'objet
-    date_consommation = models.DateField(verbose_name=_("Date de consommation"), default=timezone.now)  # use timezone.now without ()
-    heure_consommation = models.TimeField(verbose_name=_("Heure de consommation"), default=timezone.now)  # same here
+    date_consommation = models.DateField(verbose_name=_("Date de consommation"), default=timezone.now)
+    heure_consommation = models.TimeField(verbose_name=_("Heure de consommation"), default=timezone.now)
 
     def __str__(self):
         return f"Nourriture: {self.nourriture_proposee}, Grammage: {self.grammage_nourriture} ({self.date_consommation} à {self.heure_consommation})"
