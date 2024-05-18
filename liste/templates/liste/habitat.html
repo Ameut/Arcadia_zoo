@@ -103,7 +103,7 @@
                     <li>
                         <span class="animal-name"onmouseover="showImage(this)"
                         onmouseout="hideImage(this)" onclick="incrementClick({{ animal.id }})">
-                            {{ animal.prenom }} - Clics : <span id="clicks-count-{{ animal.id }}">{{ animal.clics }}</span>
+                            {{ animal.prenom }}- {{ animal.race.label }} - Clics : <span id="clicks-count-{{ animal.id }}">{{ animal.clics }}</span>
                         </span>
                         <div class="animal-image" style="display: none;">
                             <img src="{{ animal.image.url }}" alt="Image de {{ animal.prenom }}" style="max-width: 350px; height: auto;">
