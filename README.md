@@ -84,9 +84,32 @@ Créer un superutilisateur :
 python manage.py createsuperuser 
  
 Démarrer le serveur de développement : 
-bash 
-Copy code 
+ 
 python manage.py runserver 
 Accédez a http://127.0.0.1:8000 
+
+Problème
+Vous pouvez rencontrer une erreur indiquant que le module Django ou Pillow n'est pas trouvé, typiquement :
+ModuleNotFoundError: No module named 'Django'
+Solution
+Activer l'environnement virtuel : Assurez-vous que myenv est activé avant d'installer des packages ou d'exécuter le projet.
+
+Windows :
+.\myenv\Scripts\activate
+macOS/Linux:
+source myenv/bin/activate
+
+Installer Django/Pillow : Dans l'environnement activé, installez les packages manquants via pip :
+
+pip install Django Pillow ect..
+Problème
+Problèmes lors de la création ou de l'activation de myenv.
+
+Solution
+Création de l'environnement virtuel : Si myenv n'existe pas ou est corrompu :
+python -m venv myenv
+
+
+
 Pour toute question, veuillez contacter ameur.ouafi@hotmail.fr ou 
 ouafiameur@gmail.com. 
