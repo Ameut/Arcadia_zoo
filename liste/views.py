@@ -147,7 +147,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 
 logger = logging.getLogger(__name__)
-
+#   connexion à la base de données MongoDB
 mongo_client = MongoClient('localhost', 27017)
 db = mongo_client['clic-animal']
 clicks_collection = db['clicks']

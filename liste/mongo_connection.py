@@ -1,4 +1,6 @@
 from pymongo import MongoClient
 
-client = MongoClient('localhost', 27017)  # Modifier avec vos propres paramètres de connexion
-db = client['clic-animal']
+mongo_client = MongoClient('mongodb+srv://ameur:K7V4s1ro5rPgamCv@cluster0.pebkoik.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+db = mongo_client['clic-animal']
+clicks_collection = db['clicks']
+
