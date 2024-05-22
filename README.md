@@ -105,10 +105,10 @@ pip install Django Pillow ect..
 Problème
 Problèmes lors de la création ou de l'activation de myenv.
 
-Solution
+Solution supprimer l'ancien si nécessaire.
 Création de l'environnement virtuel : Si myenv n'existe pas ou est corrompu :
 python -m venv myenv
-
+puis installer Django pillow ect...
 
 
 Pour toute question, veuillez contacter ameur.ouafi@hotmail.fr ou 
