@@ -33,7 +33,7 @@ from .models import Animal,Habitat,Image,Race,Service,Role,Utilisateur,RapportVe
                
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)'''
 
-def index(request):
+def index(request):# Vue pour la page d'accueil
     avis_liste = Avis.objects.filter(isVisible=True)
     return render(request, 'liste/index.html', {'avis_liste': avis_liste})
 def habitat(request):
@@ -42,12 +42,12 @@ def habitat(request):
     return render(request, 'liste/habitat.html', context)
 
 
-def service(request):
+def service(request):  # Vue pour la page des services
     services = Service.objects.all()
     context = {'services': services}
     return render(request, 'liste/service.html', context)
 
-def contact(request):
+def contact(request):# Vue pour la page de contact
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -82,7 +82,7 @@ def avis(request):
     return render(request, 'liste/avis.html', {'avis': avis_liste})
 
 def avis_page(request):
-    if request.method == 'POST':
+    if request.method == 'POST':# Si la requête est de type POST, on crée un formulaire avec les données de la requête
         form = AvisForm(request.POST)
         if form.is_valid():
             avis = form.save(commit=False)
@@ -103,7 +103,7 @@ def submit_avis(request):# Vue pour soumettre un avis
             #  crée une instance d'Avis sans sauvegarder en DB
             avis = form.save(commit=False)
             
-            # Plus besoin de cette ligne puisque le pseudo est déjà inclus dans le formulaire
+           
             # avis.pseudo = request.user.username
             
             avis.isVisible = False  # L'avis n'est pas visible par défaut
@@ -147,28 +147,26 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 
 logger = logging.getLogger(__name__)
-#   connexion à la base de données MongoDB
-mongo_client = MongoClient('localhost', 27017)
+
+# Connexion à la base de données MongoDB Atlas
+mongo_client = MongoClient("mongodb+srv://ameur:Ameur81@cluster0.tbfykl4.mongodb.net/")
 db = mongo_client['clic-animal']
 clicks_collection = db['clicks']
 
-def sync_clicks(request):# Fonction pour synchroniser les clics de MongoDB avec Django
-    clicks_collection = db['clicks']
+def sync_clicks(request):# Vue pour synchroniser les clics avec la base de données MongoDB
     clicks = clicks_collection.find()
-
     for click in clicks:
         animal_id = click['animal_id']
         count = click['count']
         try:
-            animal = Animal.objects.get(id=animal_id)
+            animal = Animal.objects.get(id=animal_id)# Récupère l'animal correspondant à l'ID
             animal.clics = count
             animal.save()
         except ObjectDoesNotExist:
             logger.warning(f"Animal with ID {animal_id} does not exist.")
-
     return redirect(reverse('admin:liste_animal_changelist'))
 
-@csrf_exempt#  pour autoriser les requêtes POST sans jeton CSRF
+@csrf_exempt# Décorateur pour désactiver la protection CSRF
 def increment_click(request: HttpRequest, animal_id: int) -> JsonResponse:
     collection = db['clicks']
     collection.update_one(
@@ -177,42 +175,35 @@ def increment_click(request: HttpRequest, animal_id: int) -> JsonResponse:
         upsert=True
     )
     updated_click = collection.find_one({'animal_id': animal_id})
-
-    # Mettre à jour le champ clics dans Django
-    try:
+    try:# Récupère l'animal correspondant à l'ID
         animal = Animal.objects.get(id=animal_id)
         animal.clics = updated_click['count']
         animal.save()
     except ObjectDoesNotExist:
         logger.warning(f"Animal with ID {animal_id} does not exist.")
-
     return JsonResponse({'new_click_count': updated_click['count']})
 
-def animaux(request):
-    try:
-        clicks_collection = db['clicks']
+def animaux(request):# Vue pour la liste des animaux
+    try:# Récupère tous les animaux, habitats et images ect..
         animals = Animal.objects.all()
         habitats = Habitat.objects.all()
         images = Image.objects.all()
         races = Race.objects.all()
-
         for animal in animals:
             clicks_data = clicks_collection.find_one({'animal_id': animal.id})
             animal.clics = clicks_data['count'] if clicks_data else 0
-
         context = {
             'animals': animals,
             'habitats': habitats,
             'images': images,
             'races': races
         }
-
-        return render(request, 'liste/animaux.html', context)
+        return render(request, 'liste/animaux.html', context) #   retourne la liste des animaux
     except Exception as e:
         logger.error(f"Erreur de la base de données: {str(e)}")
         return HttpResponse("Erreur de la base de données: " + str(e), status=500)
 
-def reset_click(request, animal_id):
+def reset_click(request, animal_id):# Vue pour remettre à zéro le compteur de clics a zero
     animal = get_object_or_404(Animal, id=animal_id)
     animal.clics = 0
     animal.save()
