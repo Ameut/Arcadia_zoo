@@ -65,8 +65,11 @@ Configurer les bases de données :
  
 SQLite est configurée par défaut avec Django. 
 Pour MongoDB, assurez-vous que MongoDB fonctionne localement ou connectez-vous 
-à une instance MongoDB Atlas. 
- 
+à une instance MongoDB Atlas. Il est normarlement configurer pour interagir avec la Bd de MongoDB Atlas vous n'avez rien a faire.
+mongo_client = MongoClient("mongodb+srv://ameur:Ameur81@cluster0.tbfykl4.mongodb.net/")
+db = mongo_client['clic-animal']
+clicks_collection = db['clicks']
+sinon si vous voulez travailler en local, modifier dans  le fichier views.py configurer  mongo_client = MongoClient("localhost",27017) 
 Étapes pour se Connecter avec MongoDB Compass 
  
 Téléchargez MongoDB Compass depuis le site officiel : 
@@ -74,7 +77,9 @@ https://www.mongodb.com/try/download/compass
 Installer MongoDB Compass : 
 Suivez le tutoriel d'installation pour Windows, Mac ou Linux : 
 https://www.mongodb.com/docs/compass/current/install/ 
- 
+puis créer la BD "clic-animal"
+puis "clicks"
+
 Lancer les migrations : 
  
 python manage.py migrate 
