@@ -47,20 +47,17 @@ def service(request):  # Vue pour la page des services
     context = {'services': services}
     return render(request, 'liste/service.html', context)
 
-def contact(request):# Vue pour la page de contact
+def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            #  logique pour rediriger l'utilisateur après la soumission du formulaire
-            return redirect('index')  # retour a la page d'acceuil
+            return JsonResponse({'message': 'Votre message a été envoyé avec succès, à bientôt !'}, status=200)
+        else:
+            return JsonResponse({'errors': form.errors}, status=400)
     else:
         form = ContactForm()
-
     return render(request, 'liste/contact.html', {'form': form})
-#  rapport veto    #
-
-
 
 
 @login_required

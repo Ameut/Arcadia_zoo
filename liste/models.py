@@ -100,7 +100,7 @@ class Avis(models.Model):
 class Contact(models.Model):
     nom = models.CharField(max_length=50)
     prenom = models.CharField(max_length=50)
-    email = models.EmailField(unique=True) 
+    email = models.EmailField()  # Suppression de l'unicité
     message = models.TextField()
 
     def __str__(self):
