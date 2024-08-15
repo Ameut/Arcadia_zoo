@@ -27,7 +27,7 @@
       animation-duration: 2s;
   
     }
-    @keyframes titel {
+    @keyframes titel { 
       0% {
         opacity: 0;
         transform: translateY(-100px);
@@ -401,7 +401,7 @@ button:hover {
   }
 }
 /*  texte formulaire */
-.form-background {
+.form-background {     
   position: relative;
   text-align: center; /*  centré */
 }
@@ -439,4 +439,61 @@ button:hover {
 }
 .animal-name {
   cursor: pointer;
+}
+
+
+/* Modal pour l'image en plein écran */
+.modal {
+  display: none; /* Masqué par défaut */
+  position: fixed; /* Reste en place */
+  z-index: 1000; /* Niveau d'empilement élevé */
+  left: 0;
+  top: 0;
+  width: 100%; /* Largeur totale */
+  height: 100%; /* Hauteur totale */
+  overflow: auto; /* Activation du défilement si nécessaire */
+  background-color: rgba(0, 0, 0, 0.8); /* Arrière-plan semi-transparent */
+  backdrop-filter: blur(10px); /* Effet de flou sur l'arrière-plan */
+  justify-content: center; /* Centre horizontalement */
+  align-items: center; /* Centre verticalement */
+  display: flex; /* Utilisation de flexbox pour le centrage */
+}
+
+.modal-content {
+  position: relative;
+  padding: 20px;
+  max-width: 90%;  /* Limite la taille du contenu à 90% de la largeur de l'écran */
+  max-height: 90%; /* Limite la taille du contenu à 90% de la hauteur de l'écran */
+  text-align: center;
+}
+
+.modal-image {
+  max-width: 700px;  /* Largeur maximale de l'image */
+  max-height: 700px; /* Hauteur maximale de l'image */
+  width: 100%; /* Prend toute la largeur disponible */
+  height: auto;
+  border: 5px solid white;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9); /* Ombre pour un meilleur contraste */
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.clickable-image {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s; /* Animation pour agrandir un peu l'image au survol */
+}
+
+.clickable-image:hover {
+  transform: scale(1.05); /* Agrandissement au survol */
 }
