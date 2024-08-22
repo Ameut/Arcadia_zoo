@@ -16,10 +16,10 @@ env/
 >>>>>>> 43fcf57c2e40cbf0b5eaba13f7e7d5e57bea435e
 
 # Django
-*.sqlite3
-db.sqlite3
-media/
-staticfiles/
+#.sqlite3
+#db.sqlite3
+#media/
+#staticfiles/
 
 # Logs
 *.log
@@ -30,7 +30,7 @@ staticfiles/
 *.csv
 
 # Fichiers secrets
-.env
+#env
 
 # IDE
 .idea/
@@ -43,8 +43,8 @@ node_modules/
 npm-debug.log
 
 # Docker
-docker-compose.yml
-Dockerfile
+#docker-compose.yml
+#Dockerfile
 
 # MacOS
 .DS_Store

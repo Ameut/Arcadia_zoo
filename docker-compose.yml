@@ -1,0 +1,15 @@
+
+services:
+  web:  # Nom du service (peut être changé)
+    build: .  # Construire l'image Docker à partir du Dockerfile situé dans le même répertoire
+    command: gunicorn zooArcadia.wsgi:application --bind 0.0.0.0:8000
+    # Utilise Gunicorn pour servir l'application Django, en liant sur le port 8000 sur toutes les interfaces
+    volumes:
+      - .:/app  # Monte le répertoire actuel (le projet Django) dans le conteneur sous /app
+      - ./staticfiles:/app/staticfiles  # Monte le dossier pour les fichiers statiques
+    ports:
+      - "8000:8000"  # Mappe le port 8000 du conteneur au port 8000 de l'hôte
+    environment:
+      - DEBUG=False  # Définit l'environnement de production
+      - SECRET_KEY=your_secret_key  # Clé secrète pour Django (à remplacer par une valeur sécurisée)
+      - DATABASE_URL=sqlite:///db/db.sqlite3  # Configuration de la base de données SQLite
