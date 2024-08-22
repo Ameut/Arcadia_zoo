@@ -35,7 +35,7 @@ document.querySelectorAll('.image-container').forEach(function(container) {
         var img = container.querySelector('.clickable-image');
         var title = container.querySelector('.habitat-title');
 
-        img.style.transform = 'scale(1)';
-        title.style.opacity = '0';
+        img.style.transform = 'scale(1)'; 
+        title.style.opacity = '0';    
     });
 });
