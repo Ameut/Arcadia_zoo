@@ -14,7 +14,7 @@ class HabitatViewTests(TestCase):
         # Créer une race d'animal
         self.race = Race.objects.create(label="Lion")
         
-        # Créer un fichier image fictif
+        # Créer un fichier image 
         image = SimpleUploadedFile("lion.jpg", b"file_content", content_type="image/jpeg")
         
         # Créer un animal associé à cet habitat avec une image
