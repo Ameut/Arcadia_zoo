@@ -174,3 +174,21 @@ LOGGING = {
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# Charger les variables d'environnement depuis le fichier .env
+load_dotenv()
+
+# Récupérer la variable MONGO_URI depuis les variables d'environnement
+MONGO_URI = os.getenv('MONGO_URI')
+
+# Définir le chemin de base
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Paramètres de sécurité
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG') == 'True'
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
